@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Planner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Event Planner</h1>
+
+    <!-- Add Event Form -->
+    <div class="form-section">
+      <h2>Add Event</h2>
+      <form id="addEventForm">
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName" name="eventName" required>
+        
+        <label for="eventDate">Event Date:</label>
+        <input type="date" id="eventDate" name="eventDate" required>
+        
+        <label for="eventLocation">Location:</label>
+        <input type="text" id="eventLocation" name="eventLocation" required>
+        
+        <button type="submit">Add Event</button>
+      </form>
+    </div>
+
+    <!-- Add Guest Form -->
+    <div class="form-section">
+      <h2>Add Guest</h2>
+      <form id="addGuestForm">
+        <label for="guestName">Guest Name:</label>
+        <input type="text" id="guestName" name="guestName" required>
+        
+        <label for="rsvpStatus">RSVP:</label>
+        <select id="rsvpStatus" name="rsvpStatus" required>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+        
+        <label for="eventId">Event ID:</label>
+        <input type="text" id="eventId" name="eventId" required placeholder="Enter associated event ID">
+        
+        <button type="submit">Add Guest</button>
+      </form>
+    </div>
+
+    <!-- Retrieve Events -->
+    <div class="form-section">
+      <h2>View Events</h2>
+      <button id="viewEvents">View All Events</button>
+      <div id="eventsOutput"></div>
+    </div>
+
+    <!-- Retrieve Guests -->
+    <div class="form-section">
+      <h2>View Guests by Event</h2>
+      <label for="eventGuestsId">Event ID:</label>
+      <input type="text" id="eventGuestsId" placeholder="Enter Event ID">
+      <button id="viewGuests">View Guests</button>
+      <div id="guestsOutput"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="crud.js"></script>
+  <script type="module" src="scripts.js"></script>
+
+</body>
+</html>
