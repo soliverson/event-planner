@@ -47,10 +47,17 @@
         </select>
         
         <label for="eventId">Event ID:</label>
-        <input type="text" id="eventId" name="eventId" required placeholder="Enter associated Event ID">
+        <input type="text" id="eventId" name="eventId" required placeholder="Enter Event ID">
         
         <button type="submit">Add Guest</button>
       </form>
+    </div>
+
+    <!-- Retrieve Events -->
+    <div class="form-section">
+      <h2>View Events</h2>
+      <button id="viewEvents">View All Events</button>
+      <div id="eventsOutput"></div>
     </div>
 
     <!-- Retrieve Guests by Event -->
@@ -61,11 +68,25 @@
       <button id="viewGuests">View Guests</button>
       <div id="guestsOutput"></div>
     </div>
+
+    <!-- Delete Event -->
+    <div class="form-section">
+      <h2>Delete Event</h2>
+      <label for="deleteEventId">Event ID:</label>
+      <input type="text" id="deleteEventId" placeholder="Enter Event ID">
+      <button id="deleteEvent">Delete Event</button>
+    </div>
+
+    <!-- Delete Guest -->
+    <div class="form-section">
+      <h2>Delete Guest</h2>
+      <label for="deleteGuestId">Guest ID:</label>
+      <input type="text" id="deleteGuestId" placeholder="Enter Guest ID">
+      <button id="deleteGuest">Delete Guest</button>
+    </div>
   </div>
 
   <!-- Scripts -->
-  <script type="module" src="firebase-config.js"></script>
-  <script type="module" src="crud.js"></script>
   <script type="module" src="scripts.js"></script>
 </body>
 </html>
