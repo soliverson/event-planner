@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("addEventForm").reset();
     } catch (error) {
       console.error("Error adding event:", error);
-      alert("Failed to add event. Check console for details.");
+      alert("Failed to add event. Check the console for details.");
     }
   });
 
