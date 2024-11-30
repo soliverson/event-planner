@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await addEvent({ name, date, location });
       alert("Event added successfully!");
       document.getElementById("addEventForm").reset();
-      refreshEvents(); // Refresh the events list after adding
+      refreshEvents();
     } catch (error) {
       console.error("Error adding event:", error);
       alert("Failed to add event. Check the console for details.");
@@ -71,14 +71,14 @@ document.addEventListener("DOMContentLoaded", () => {
       await addGuest(eventId, { name, rsvp });
       alert("Guest added successfully!");
       document.getElementById("addGuestForm").reset();
-      refreshGuests(eventId); // Refresh guests list after adding
+      refreshGuests(eventId);
     } catch (error) {
       console.error("Error adding guest:", error);
       alert("Failed to add guest. Check console for details.");
     }
   });
 
-  // View Guests by Event
+  // View Guests
   async function refreshGuests(eventId) {
     const guestsOutput = document.getElementById("guestsOutput");
     guestsOutput.innerHTML = ""; // Clear output
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await deleteEvent(eventId);
       alert("Event deleted successfully!");
       document.getElementById("deleteEventId").value = ""; // Clear input
-      refreshEvents(); // Refresh events list after deletion
+      refreshEvents();
     } catch (error) {
       console.error("Error deleting event:", error);
       alert("Failed to delete event. Check console for details.");
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Delete Guest
   document.getElementById("deleteGuest").addEventListener("click", async () => {
     const guestId = document.getElementById("deleteGuestId").value.trim();
-    const eventId = document.getElementById("eventGuestsId").value.trim(); // For refreshing guests list
+    const eventId = document.getElementById("eventGuestsId").value.trim();
     if (!guestId) {
       alert("Please enter a Guest ID to delete.");
       return;
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await deleteGuest(guestId);
       alert("Guest deleted successfully!");
       document.getElementById("deleteGuestId").value = ""; // Clear input
-      if (eventId) await refreshGuests(eventId); // Refresh guests if event ID is available
+      refreshGuests(eventId);
     } catch (error) {
       console.error("Error deleting guest:", error);
       alert("Failed to delete guest. Check console for details.");
