@@ -1,5 +1,4 @@
-import db from "./firebase-config.js"; // Use the default export
-
+import db from "./firebase-config.js"; // Use the default export from firebase-config.js
 import {
   collection,
   addDoc,
@@ -9,6 +8,8 @@ import {
   query,
   where,
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+// ---------------------- CRUD for Events ----------------------
 
 // Add Event
 export async function addEvent(event) {
@@ -33,6 +34,8 @@ export async function deleteEvent(eventId) {
   await deleteDoc(eventRef);
   console.log("Event deleted successfully:", eventId);
 }
+
+// ---------------------- CRUD for Guests ----------------------
 
 // Add Guest
 export async function addGuest(eventId, guest) {
