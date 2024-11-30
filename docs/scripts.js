@@ -8,6 +8,8 @@ import {
 } from "./crud.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM fully loaded and parsed."); // Debugging log
+
   // Add Event
   document.getElementById("addEventForm").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -22,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const addedEventId = await addEvent({ name, date, location });
+      console.log("Event added successfully with ID:", addedEventId);
       alert(`Event added successfully! ID: ${addedEventId}`);
       document.getElementById("addEventForm").reset();
       refreshEvents();
@@ -38,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const events = await getEventIds();
+      console.log("Retrieved events:", events); // Debugging log
       if (events.length > 0) {
         events.forEach((event) => {
           const div = document.createElement("div");
@@ -62,22 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("viewEvents").addEventListener("click", refreshEvents);
 
-  async function handleDeleteEvent(eventId) {
-    if (!eventId) {
-      alert("Event ID is missing.");
-      return;
-    }
-
-    try {
-      await deleteEvent(eventId);
-      alert("Event deleted successfully!");
-      refreshEvents();
-    } catch (error) {
-      console.error("Error deleting event:", error);
-      alert("Failed to delete event. Check console for details.");
-    }
-  }
-
   // Add Guest
   document.getElementById("addGuestForm").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -92,12 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const addedGuestId = await addGuest(eventId, { name, rsvp });
+      console.log("Guest added successfully with ID:", addedGuestId);
       alert(`Guest added successfully! ID: ${addedGuestId}`);
       document.getElementById("addGuestForm").reset();
       refreshGuests(eventId);
     } catch (error) {
       console.error("Error adding guest:", error);
-      alert("Failed to add guest. Check console for details.");
+      alert("Failed to add guest. Check the console for details.");
     }
   });
 
@@ -113,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const guests = await getGuestsByEvent(eventId);
+      console.log("Retrieved guests:", guests); // Debugging log
       if (guests.length > 0) {
         guests.forEach((guest) => {
           const div = document.createElement("div");
@@ -139,6 +129,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const eventId = document.getElementById("eventGuestsId").value.trim();
     await refreshGuests(eventId);
   });
+
+  async function handleDeleteEvent(eventId) {
+    if (!eventId) {
+      alert("Event ID is missing.");
+      return;
+    }
+
+    try {
+      await deleteEvent(eventId);
+      alert("Event deleted successfully!");
+      refreshEvents();
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      alert("Failed to delete event. Check console for details.");
+    }
+  }
 
   async function handleDeleteGuest(guestId, eventId) {
     if (!guestId) {
