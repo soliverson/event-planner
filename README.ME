@@ -1,0 +1,84 @@
+# Overview
+
+The Event Planner is a cloud-integrated web application designed to help users organize and manage events efficiently. It allows users to create, view, update, and delete events, as well as manage guest lists and RSVP statuses for each event. By using a Cloud Firestore database, this application ensures that event data is stored securely and can be accessed and modified in real-time.
+
+The primary goal of this project is to deepen my understanding of cloud-integrated applications and improve my skills in front-end and back-end development. This project showcases my ability to work with JavaScript, Firebase, and Firestore to create a fully functional CRUD application.
+
+To use the program:
+1. Navigate to the application interface.
+2. Add events by filling out the event form.
+3. Add guests to specific events using their unique IDs.
+4. View, update, or delete events and guests directly through the interface.
+
+[Software Demo Video](http://youtube.link.goes.here)
+
+---
+
+# Cloud Database
+
+The application uses **Firebase Firestore**, a NoSQL cloud database, to store and retrieve data. Firestore allows for real-time synchronization, ensuring data is always up-to-date.
+
+## Database Structure:
+- **Events Collection**:
+  - Each document represents an event with the following fields:
+    - `name`: The name of the event.
+    - `date`: The date of the event.
+    - `location`: The event's location.
+
+- **Guests Collection**:
+  - Each document represents a guest with the following fields:
+    - `name`: The guest's name.
+    - `rsvp`: A boolean indicating whether the guest has RSVP'd.
+    - `eventId`: A reference to the associated event's ID.
+
+---
+
+# Development Environment
+
+- **Development Tools**:
+  - Visual Studio Code
+  - GitHub for version control
+  - Firebase Console for database management
+  - Browser DevTools for debugging
+
+- **Languages and Libraries**:
+  - **HTML/CSS**: For the user interface.
+  - **JavaScript**: For client-side logic.
+  - **Firebase SDK**: For integrating Firebase and Firestore.
+  - **Firestore API**: For database CRUD operations.
+
+---
+
+# Useful Websites
+
+Here are some resources that were helpful during development:
+
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [MDN Web Docs - JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Firestore Rules Guide](https://firebase.google.com/docs/firestore/security/get-started)
+- [W3Schools](https://www.w3schools.com)
+
+---
+
+# Future Work
+
+This project can be improved and expanded with the following features:
+
+1. **Enhanced UI/UX**:
+   - Add event filters and sorting functionality.
+   - Display guest RSVP status.
+
+2. **User Authentication**:
+   - Implement Firebase Authentication to ensure only authorized users can manage events and guests.
+
+3. **Notifications**:
+   - Integrate a notification system to remind users about upcoming events.
+
+4. **Error Handling**:
+   - Improve error messages and validation to guide users better.
+
+5. **Mobile Optimization**:
+   - Make the application fully responsive for mobile devices.
+
+6. **Performance Improvements**:
+   - Optimize database queries for faster data retrieval.

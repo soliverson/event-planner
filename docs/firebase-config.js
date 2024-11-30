@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -16,5 +16,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Export `db` as a named export
+// Enable Firestore debug logging
+import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+setLogLevel("debug");
+
 export { db };
