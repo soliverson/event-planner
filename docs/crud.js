@@ -1,126 +1,145 @@
 import {
-    collection,
-    addDoc,
-    getDocs,
-    doc,
-    updateDoc,
-    deleteDoc,
-    query,
-    where,
-  } from "firebase/firestore";
-  import db from "./firebase-config";
-  
-  // ---------------------- CRUD for Events ----------------------
-  
-  // Add a new event
-  export async function addEvent(event) {
-    try {
-      const docRef = await addDoc(collection(db, "Events"), event);
-      console.log("Event added with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding event: ", e);
-    }
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+} from "firebase/firestore";
+import db from "./firebase-config";
+
+// ---------------------- CRUD for Events ----------------------
+
+// Add a new event to the Events collection
+export async function addEvent(event) {
+  console.log("Adding event to Firestore:", event); // Debug log
+  try {
+    const docRef = await addDoc(collection(db, "Events"), event);
+    console.log("Event added successfully with ID:", docRef.id);
+    return docRef.id; // Return the document ID
+  } catch (error) {
+    console.error("Error adding event:", error);
+    throw error; // Rethrow error for handling in calling function
   }
-  
-  // Retrieve all events with their document IDs
-  export async function getEventIds() {
-    try {
-      const events = [];
-      const querySnapshot = await getDocs(collection(db, "Events"));
-      querySnapshot.forEach((doc) => {
-        events.push({ id: doc.id, ...doc.data() });
-      });
-      console.log("Events with IDs:", events);
-      return events;
-    } catch (e) {
-      console.error("Error retrieving events:", e);
-    }
+}
+
+// Retrieve all events with their document IDs
+export async function getEventIds() {
+  console.log("Fetching events from Firestore...");
+  try {
+    const events = [];
+    const querySnapshot = await getDocs(collection(db, "Events"));
+    querySnapshot.forEach((doc) => {
+      events.push({ id: doc.id, ...doc.data() });
+    });
+    console.log("Retrieved events:", events);
+    return events;
+  } catch (error) {
+    console.error("Error retrieving events:", error);
+    throw error;
   }
-  
-  // Update an event by ID
-  export async function updateEvent(eventId, updatedData) {
-    try {
-      const eventRef = doc(db, "Events", eventId);
-      await updateDoc(eventRef, updatedData);
-      console.log("Event updated");
-    } catch (e) {
-      console.error("Error updating event: ", e);
-    }
+}
+
+// Update an event by ID
+export async function updateEvent(eventId, updatedData) {
+  console.log(`Updating event with ID ${eventId}:`, updatedData);
+  try {
+    const eventRef = doc(db, "Events", eventId);
+    await updateDoc(eventRef, updatedData);
+    console.log("Event updated successfully");
+  } catch (error) {
+    console.error("Error updating event:", error);
+    throw error;
   }
-  
-  // Delete an event by ID
-  export async function deleteEvent(eventId) {
-    try {
-      const eventRef = doc(db, "Events", eventId);
-      await deleteDoc(eventRef);
-      console.log("Event deleted");
-    } catch (e) {
-      console.error("Error deleting event: ", e);
-    }
+}
+
+// Delete an event by ID
+export async function deleteEvent(eventId) {
+  console.log(`Deleting event with ID ${eventId}`);
+  try {
+    const eventRef = doc(db, "Events", eventId);
+    await deleteDoc(eventRef);
+    console.log("Event deleted successfully");
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    throw error;
   }
-  
-  // ---------------------- CRUD for Guests ----------------------
-  
-  // Add a new guest to an event
-  export async function addGuest(eventId, guest) {
-    try {
-      const docRef = await addDoc(collection(db, "Guests"), { ...guest, eventId });
-      console.log("Guest added with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding guest: ", e);
-    }
+}
+
+// ---------------------- CRUD for Guests ----------------------
+
+// Add a new guest to the Guests collection
+export async function addGuest(eventId, guest) {
+  console.log("Adding guest to Firestore:", { eventId, ...guest });
+  try {
+    const docRef = await addDoc(collection(db, "Guests"), { ...guest, eventId });
+    console.log("Guest added successfully with ID:", docRef.id);
+    return docRef.id; // Return the document ID
+  } catch (error) {
+    console.error("Error adding guest:", error);
+    throw error;
   }
-  
-  // Retrieve all guests with their document IDs
-  export async function getGuestIds() {
-    try {
-      const guests = [];
-      const querySnapshot = await getDocs(collection(db, "Guests"));
-      querySnapshot.forEach((doc) => {
-        guests.push({ id: doc.id, ...doc.data() });
-      });
-      console.log("Guests with IDs:", guests);
-      return guests;
-    } catch (e) {
-      console.error("Error retrieving guests:", e);
-    }
+}
+
+// Retrieve all guests with their document IDs
+export async function getGuestIds() {
+  console.log("Fetching guests from Firestore...");
+  try {
+    const guests = [];
+    const querySnapshot = await getDocs(collection(db, "Guests"));
+    querySnapshot.forEach((doc) => {
+      guests.push({ id: doc.id, ...doc.data() });
+    });
+    console.log("Retrieved guests:", guests);
+    return guests;
+  } catch (error) {
+    console.error("Error retrieving guests:", error);
+    throw error;
   }
-  
-  // Retrieve guests for a specific event by event ID
-  export async function getGuestsByEvent(eventId) {
-    try {
-      const guests = [];
-      const q = query(collection(db, "Guests"), where("eventId", "==", eventId));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        guests.push({ id: doc.id, ...doc.data() });
-      });
-      console.log(`Guests for Event ID ${eventId}:`, guests);
-      return guests;
-    } catch (e) {
-      console.error("Error retrieving guests for the event:", e);
-    }
+}
+
+// Retrieve guests for a specific event by event ID
+export async function getGuestsByEvent(eventId) {
+  console.log(`Fetching guests for Event ID ${eventId}`);
+  try {
+    const guests = [];
+    const q = query(collection(db, "Guests"), where("eventId", "==", eventId));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      guests.push({ id: doc.id, ...doc.data() });
+    });
+    console.log(`Retrieved guests for Event ID ${eventId}:`, guests);
+    return guests;
+  } catch (error) {
+    console.error("Error retrieving guests for the event:", error);
+    throw error;
   }
-  
-  // Update a guest by ID
-  export async function updateGuest(guestId, updatedData) {
-    try {
-      const guestRef = doc(db, "Guests", guestId);
-      await updateDoc(guestRef, updatedData);
-      console.log("Guest updated");
-    } catch (e) {
-      console.error("Error updating guest: ", e);
-    }
+}
+
+// Update a guest by ID
+export async function updateGuest(guestId, updatedData) {
+  console.log(`Updating guest with ID ${guestId}:`, updatedData);
+  try {
+    const guestRef = doc(db, "Guests", guestId);
+    await updateDoc(guestRef, updatedData);
+    console.log("Guest updated successfully");
+  } catch (error) {
+    console.error("Error updating guest:", error);
+    throw error;
   }
-  
-  // Delete a guest by ID
-  export async function deleteGuest(guestId) {
-    try {
-      const guestRef = doc(db, "Guests", guestId);
-      await deleteDoc(guestRef);
-      console.log("Guest deleted");
-    } catch (e) {
-      console.error("Error deleting guest: ", e);
-    }
+}
+
+// Delete a guest by ID
+export async function deleteGuest(guestId) {
+  console.log(`Deleting guest with ID ${guestId}`);
+  try {
+    const guestRef = doc(db, "Guests", guestId);
+    await deleteDoc(guestRef);
+    console.log("Guest deleted successfully");
+  } catch (error) {
+    console.error("Error deleting guest:", error);
+    throw error;
   }
-  
+}
