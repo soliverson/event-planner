@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         events.forEach((event) => {
           const div = document.createElement("div");
           div.textContent = `Event: ${event.name} (Date: ${event.date}, Location: ${event.location})`;
+          div.setAttribute("data-id", event.id); // Attach the event ID
           eventsOutput.appendChild(div);
         });
       } else {
@@ -54,61 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.getElementById("viewEvents").addEventListener("click", refreshEvents);
-
-  // Add Guest
-  document.getElementById("addGuestForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = document.getElementById("guestName").value.trim();
-    const rsvp = document.getElementById("rsvpStatus").value === "true";
-    const eventId = document.getElementById("eventId").value.trim();
-
-    if (!name || !eventId) {
-      alert("Please fill in all fields before submitting.");
-      return;
-    }
-
-    try {
-      await addGuest(eventId, { name, rsvp });
-      alert("Guest added successfully!");
-      document.getElementById("addGuestForm").reset();
-      refreshGuests(eventId);
-    } catch (error) {
-      console.error("Error adding guest:", error);
-      alert("Failed to add guest. Check console for details.");
-    }
-  });
-
-  // View Guests
-  async function refreshGuests(eventId) {
-    const guestsOutput = document.getElementById("guestsOutput");
-    guestsOutput.innerHTML = ""; // Clear output
-
-    if (!eventId) {
-      guestsOutput.textContent = "Please enter an Event ID.";
-      return;
-    }
-
-    try {
-      const guests = await getGuestsByEvent(eventId);
-      if (guests.length > 0) {
-        guests.forEach((guest) => {
-          const div = document.createElement("div");
-          div.textContent = `Guest: ${guest.name} (RSVP: ${guest.rsvp ? "Yes" : "No"})`;
-          guestsOutput.appendChild(div);
-        });
-      } else {
-        guestsOutput.textContent = "No guests found for this event.";
-      }
-    } catch (error) {
-      console.error("Error retrieving guests:", error);
-      guestsOutput.textContent = "Failed to load guests.";
-    }
-  }
-
-  document.getElementById("viewGuests").addEventListener("click", async () => {
-    const eventId = document.getElementById("eventGuestsId").value.trim();
-    await refreshGuests(eventId);
-  });
 
   // Delete Event
   document.getElementById("deleteEvent").addEventListener("click", async () => {
