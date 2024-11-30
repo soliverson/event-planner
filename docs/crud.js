@@ -9,7 +9,7 @@ import {
   where,
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-// ---------------------- CRUD for Events ----------------------
+// CRUD for Events
 
 // Add a new event
 export async function addEvent(event) {
@@ -29,9 +29,8 @@ export async function getEventIds() {
     const events = [];
     const querySnapshot = await getDocs(collection(db, "Events"));
     querySnapshot.forEach((doc) => {
-      events.push({ id: doc.id, ...doc.data() }); // Capture document IDs
+      events.push({ id: doc.id, ...doc.data() });
     });
-    console.log("Retrieved events:", events);
     return events;
   } catch (error) {
     console.error("Error retrieving events:", error);
@@ -47,12 +46,12 @@ export async function deleteEvent(eventId) {
     await deleteDoc(eventRef);
     console.log("Event deleted successfully:", eventId);
   } catch (error) {
-    console.error("Error deleting event:", error);
+    console.error("Error deleting event:", error.message);
     throw error;
   }
 }
 
-// ---------------------- CRUD for Guests ----------------------
+// CRUD for Guests
 
 // Add a new guest
 export async function addGuest(eventId, guest) {
@@ -73,9 +72,8 @@ export async function getGuestsByEvent(eventId) {
     const q = query(collection(db, "Guests"), where("eventId", "==", eventId));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      guests.push({ id: doc.id, ...doc.data() }); // Capture document IDs
+      guests.push({ id: doc.id, ...doc.data() });
     });
-    console.log(`Guests for event ID ${eventId}:`, guests);
     return guests;
   } catch (error) {
     console.error("Error retrieving guests for event:", error);
@@ -91,7 +89,7 @@ export async function deleteGuest(guestId) {
     await deleteDoc(guestRef);
     console.log("Guest deleted successfully:", guestId);
   } catch (error) {
-    console.error("Error deleting guest:", error);
+    console.error("Error deleting guest:", error.message);
     throw error;
   }
 }
