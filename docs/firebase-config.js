@@ -10,13 +10,11 @@ const firebaseConfig = {
   storageBucket: "event-planner-b35e7.appspot.com",
   messagingSenderId: "940381941062",
   appId: "1:940381941062:web:ca6cbd964b23e5ba614947",
-  measurementId: "G-1Y9JWMCT5P",
+  measurementId: "G-1Y9JWMCT5P"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Initialize Firestore
 const db = getFirestore(app);
 
 export default db;
