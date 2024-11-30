@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const addedEventId = await addEvent({ name, date, location });
-      alert(`Event added successfully! ID: ${addedEventId}`);
+      await addEvent({ name, date, location });
+      alert("Event added successfully!");
       document.getElementById("addEventForm").reset();
       refreshEvents();
     } catch (error) {
@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
         events.forEach((event) => {
           const div = document.createElement("div");
           div.textContent = `Event: ${event.name} (Date: ${event.date}, Location: ${event.location})`;
-          div.setAttribute("data-id", event.id); // Attach the event ID
           eventsOutput.appendChild(div);
         });
       } else {
@@ -69,8 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const addedGuestId = await addGuest(eventId, { name, rsvp });
-      alert(`Guest added successfully! ID: ${addedGuestId}`);
+      await addGuest(eventId, { name, rsvp });
+      alert("Guest added successfully!");
       document.getElementById("addGuestForm").reset();
       refreshGuests(eventId);
     } catch (error) {
@@ -79,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // View Guests by Event
+  // View Guests
   async function refreshGuests(eventId) {
     const guestsOutput = document.getElementById("guestsOutput");
     guestsOutput.innerHTML = ""; // Clear output
@@ -95,7 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
         guests.forEach((guest) => {
           const div = document.createElement("div");
           div.textContent = `Guest: ${guest.name} (RSVP: ${guest.rsvp ? "Yes" : "No"})`;
-          div.setAttribute("data-id", guest.id); // Attach the guest ID
           guestsOutput.appendChild(div);
         });
       } else {
@@ -134,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Delete Guest
   document.getElementById("deleteGuest").addEventListener("click", async () => {
     const guestId = document.getElementById("deleteGuestId").value.trim();
-    const eventId = document.getElementById("eventGuestsId").value.trim(); // For refreshing guests list
+    const eventId = document.getElementById("eventGuestsId").value.trim();
     if (!guestId) {
       alert("Please enter a Guest ID to delete.");
       return;
@@ -144,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await deleteGuest(guestId);
       alert("Guest deleted successfully!");
       document.getElementById("deleteGuestId").value = ""; // Clear input
-      if (eventId) await refreshGuests(eventId); // Refresh guests if event ID is available
+      refreshGuests(eventId);
     } catch (error) {
       console.error("Error deleting guest:", error);
       alert("Failed to delete guest. Check console for details.");
