@@ -28,7 +28,7 @@
     <!-- Add Event Form -->
     <div class="form-section">
       <h2>Add Event</h2>
-      <form id="addEventForm">
+      <form id="addEventForm" onsubmit="return false;">
         <label for="eventName">Event Name:</label>
         <input type="text" id="eventName" name="eventName" required>
         
@@ -45,7 +45,7 @@
     <!-- Add Guest Form -->
     <div class="form-section">
       <h2>Add Guest</h2>
-      <form id="addGuestForm">
+      <form id="addGuestForm" onsubmit="return false;">
         <label for="guestName">Guest Name:</label>
         <input type="text" id="guestName" name="guestName" required>
         
@@ -80,6 +80,7 @@
   </div>
 
   <!-- Scripts -->
+  <script type="module" src="firebase-config.js"></script>
   <script type="module" src="crud.js"></script>
   <script type="module" src="scripts.js"></script>
 </body>

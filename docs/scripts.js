@@ -1,18 +1,16 @@
 import {
   addEvent,
   getEventIds,
-  updateEvent,
-  deleteEvent,
   addGuest,
   getGuestsByEvent,
 } from "./crud.js";
 
 // ---------------------- Add Event ----------------------
 document.getElementById("addEventForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const name = document.getElementById("eventName").value;
-  const date = document.getElementById("eventDate").value;
-  const location = document.getElementById("eventLocation").value;
+  e.preventDefault(); // Prevent the default form submission
+  const name = document.getElementById("eventName").value.trim();
+  const date = document.getElementById("eventDate").value.trim();
+  const location = document.getElementById("eventLocation").value.trim();
 
   if (!name || !date || !location) {
     alert("Please fill in all fields before submitting.");
@@ -55,10 +53,10 @@ document.getElementById("viewEvents").addEventListener("click", async () => {
 
 // ---------------------- Add Guest ----------------------
 document.getElementById("addGuestForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const name = document.getElementById("guestName").value;
+  e.preventDefault(); // Prevent the default form submission
+  const name = document.getElementById("guestName").value.trim();
   const rsvp = document.getElementById("rsvpStatus").value === "true";
-  const eventId = document.getElementById("eventId").value;
+  const eventId = document.getElementById("eventId").value.trim();
 
   if (!name || !eventId) {
     alert("Please fill in all fields before submitting.");
@@ -78,7 +76,7 @@ document.getElementById("addGuestForm").addEventListener("submit", async (e) => 
 
 // ---------------------- View Guests by Event ----------------------
 document.getElementById("viewGuests").addEventListener("click", async () => {
-  const eventId = document.getElementById("eventGuestsId").value;
+  const eventId = document.getElementById("eventGuestsId").value.trim();
   const guestsOutput = document.getElementById("guestsOutput");
   guestsOutput.innerHTML = ""; // Clear previous content
 
