@@ -1,4 +1,4 @@
-import { db } from "./firebase-config.js";
+import db from "./firebase-config.js";
 import {
   collection,
   addDoc,
@@ -9,9 +9,7 @@ import {
   where,
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-// ---------------------- CRUD for Events ----------------------
-
-// Add a new event
+// CRUD for Events
 export async function addEvent(event) {
   try {
     const docRef = await addDoc(collection(db, "Events"), event);
@@ -23,7 +21,6 @@ export async function addEvent(event) {
   }
 }
 
-// Retrieve all events
 export async function getEventIds() {
   try {
     const events = [];
@@ -38,7 +35,6 @@ export async function getEventIds() {
   }
 }
 
-// Delete an event
 export async function deleteEvent(eventId) {
   try {
     const eventRef = doc(db, "Events", eventId);
@@ -50,9 +46,7 @@ export async function deleteEvent(eventId) {
   }
 }
 
-// ---------------------- CRUD for Guests ----------------------
-
-// Add a new guest
+// CRUD for Guests
 export async function addGuest(eventId, guest) {
   try {
     const docRef = await addDoc(collection(db, "Guests"), { ...guest, eventId });
@@ -64,7 +58,6 @@ export async function addGuest(eventId, guest) {
   }
 }
 
-// Retrieve guests by event
 export async function getGuestsByEvent(eventId) {
   try {
     const guests = [];
@@ -80,7 +73,6 @@ export async function getGuestsByEvent(eventId) {
   }
 }
 
-// Delete a guest
 export async function deleteGuest(guestId) {
   try {
     const guestRef = doc(db, "Guests", guestId);
