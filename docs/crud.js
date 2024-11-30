@@ -26,6 +26,7 @@ export async function addEvent(event) {
 // Retrieve all events
 export async function getEventIds() {
   try {
+    console.log("Fetching events from Firestore...");
     const events = [];
     const querySnapshot = await getDocs(collection(db, "Events"));
     querySnapshot.forEach((doc) => {
@@ -42,7 +43,7 @@ export async function getEventIds() {
 // Delete an event
 export async function deleteEvent(eventId) {
   try {
-    console.log("Attempting to delete event with ID:", eventId);
+    console.log("Deleting event with ID:", eventId);
     const eventRef = doc(db, "Events", eventId);
     await deleteDoc(eventRef);
     console.log("Event deleted successfully:", eventId);
@@ -69,6 +70,7 @@ export async function addGuest(eventId, guest) {
 // Retrieve guests by event
 export async function getGuestsByEvent(eventId) {
   try {
+    console.log("Fetching guests for event ID:", eventId);
     const guests = [];
     const q = query(collection(db, "Guests"), where("eventId", "==", eventId));
     const querySnapshot = await getDocs(q);
@@ -86,7 +88,7 @@ export async function getGuestsByEvent(eventId) {
 // Delete a guest
 export async function deleteGuest(guestId) {
   try {
-    console.log("Attempting to delete guest with ID:", guestId);
+    console.log("Deleting guest with ID:", guestId);
     const guestRef = doc(db, "Guests", guestId);
     await deleteDoc(guestRef);
     console.log("Guest deleted successfully:", guestId);
