@@ -7,6 +7,7 @@ import {
   deleteDoc,
   query,
   where,
+  getDoc,
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 // CRUD for Events
@@ -41,10 +42,15 @@ export async function getEventIds() {
 // Delete an event
 export async function deleteEvent(eventId) {
   try {
-    console.log("Attempting to delete event with ID:", eventId);
     const eventRef = doc(db, "Events", eventId);
+    const eventSnap = await getDoc(eventRef);
+    if (!eventSnap.exists()) {
+      console.error("Event not found for deletion:", eventId);
+      return false;
+    }
     await deleteDoc(eventRef);
     console.log("Event deleted successfully:", eventId);
+    return true;
   } catch (error) {
     console.error("Error deleting event:", error.message);
     throw error;
@@ -84,10 +90,15 @@ export async function getGuestsByEvent(eventId) {
 // Delete a guest
 export async function deleteGuest(guestId) {
   try {
-    console.log("Attempting to delete guest with ID:", guestId);
     const guestRef = doc(db, "Guests", guestId);
+    const guestSnap = await getDoc(guestRef);
+    if (!guestSnap.exists()) {
+      console.error("Guest not found for deletion:", guestId);
+      return false;
+    }
     await deleteDoc(guestRef);
     console.log("Guest deleted successfully:", guestId);
+    return true;
   } catch (error) {
     console.error("Error deleting guest:", error.message);
     throw error;
