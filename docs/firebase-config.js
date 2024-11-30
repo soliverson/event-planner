@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-// Your Firebase configuration
+// Firebase configuration object
 const firebaseConfig = {
   apiKey: "AIzaSyAVW6kkkQ8xn8x3cYe_BmvBa78v_qeW1H8",
   authDomain: "event-planner-b35e7.firebaseapp.com",
@@ -13,8 +13,11 @@ const firebaseConfig = {
   measurementId: "G-1Y9JWMCT5P"
 };
 
-// Initialize Firebase
+// Initialize Firebase App
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firestore Database
 const db = getFirestore(app);
 
+// Export Firestore Database
 export default db;

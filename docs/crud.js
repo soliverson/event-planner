@@ -1,3 +1,4 @@
+// Import Firestore functions and Firestore database
 import {
   collection,
   addDoc,
@@ -17,7 +18,7 @@ export async function addEvent(event) {
   try {
     const docRef = await addDoc(collection(db, "Events"), event);
     console.log("Event added successfully with ID:", docRef.id);
-    return docRef.id;
+    return docRef.id; // Return the document ID
   } catch (error) {
     console.error("Error adding event:", error);
     throw error;
@@ -32,6 +33,7 @@ export async function getEventIds() {
     querySnapshot.forEach((doc) => {
       events.push({ id: doc.id, ...doc.data() });
     });
+    console.log("Retrieved events:", events);
     return events;
   } catch (error) {
     console.error("Error retrieving events:", error);
@@ -46,7 +48,7 @@ export async function addGuest(eventId, guest) {
   try {
     const docRef = await addDoc(collection(db, "Guests"), { ...guest, eventId });
     console.log("Guest added successfully with ID:", docRef.id);
-    return docRef.id;
+    return docRef.id; // Return the document ID
   } catch (error) {
     console.error("Error adding guest:", error);
     throw error;
@@ -62,6 +64,7 @@ export async function getGuestsByEvent(eventId) {
     querySnapshot.forEach((doc) => {
       guests.push({ id: doc.id, ...doc.data() });
     });
+    console.log(`Retrieved guests for Event ID ${eventId}:`, guests);
     return guests;
   } catch (error) {
     console.error("Error retrieving guests for the event:", error);
