@@ -41,8 +41,26 @@ document.addEventListener("DOMContentLoaded", () => {
       if (events.length > 0) {
         events.forEach((event) => {
           const div = document.createElement("div");
-          div.textContent = `Event: ${event.name} (Date: ${event.date}, Location: ${event.location})`;
+          div.innerHTML = `Event: ${event.name} (Date: ${event.date}, Location: ${event.location}) 
+          <button class="delete-event" data-id="${event.id}">Delete</button>`;
           eventsOutput.appendChild(div);
+        });
+
+        // Add delete event functionality
+        document.querySelectorAll(".delete-event").forEach((button) => {
+          button.addEventListener("click", async () => {
+            const eventId = button.getAttribute("data-id");
+            if (confirm("Are you sure you want to delete this event?")) {
+              try {
+                await deleteEvent(eventId);
+                alert("Event deleted successfully!");
+                button.parentElement.remove();
+              } catch (error) {
+                console.error("Error deleting event:", error);
+                alert("Failed to delete event. Check console for details.");
+              }
+            }
+          });
         });
       } else {
         eventsOutput.textContent = "No events found.";
@@ -69,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
       await addGuest(eventId, { name, rsvp });
       alert("Guest added successfully!");
       document.getElementById("addGuestForm").reset();
-      document.getElementById("viewGuests").click(); // Refresh the guests list
     } catch (error) {
       console.error("Error adding guest:", error);
       alert("Failed to add guest. Check console for details.");
@@ -92,8 +109,26 @@ document.addEventListener("DOMContentLoaded", () => {
       if (guests.length > 0) {
         guests.forEach((guest) => {
           const div = document.createElement("div");
-          div.textContent = `Guest: ${guest.name} (RSVP: ${guest.rsvp ? "Yes" : "No"})`;
+          div.innerHTML = `Guest: ${guest.name} (RSVP: ${guest.rsvp ? "Yes" : "No"}) 
+          <button class="delete-guest" data-id="${guest.id}">Delete</button>`;
           guestsOutput.appendChild(div);
+        });
+
+        // Add delete guest functionality
+        document.querySelectorAll(".delete-guest").forEach((button) => {
+          button.addEventListener("click", async () => {
+            const guestId = button.getAttribute("data-id");
+            if (confirm("Are you sure you want to delete this guest?")) {
+              try {
+                await deleteGuest(guestId);
+                alert("Guest deleted successfully!");
+                button.parentElement.remove();
+              } catch (error) {
+                console.error("Error deleting guest:", error);
+                alert("Failed to delete guest. Check console for details.");
+              }
+            }
+          });
         });
       } else {
         guestsOutput.textContent = "No guests found for this event.";
@@ -101,42 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       console.error("Error retrieving guests:", error);
       guestsOutput.textContent = "Failed to load guests.";
-    }
-  });
-
-  // Delete Event
-  document.getElementById("deleteEvent").addEventListener("click", async () => {
-    const eventId = document.getElementById("deleteEventId").value.trim();
-    if (!eventId) {
-      alert("Please enter an Event ID to delete.");
-      return;
-    }
-
-    try {
-      await deleteEvent(eventId);
-      alert("Event deleted successfully!");
-      document.getElementById("viewEvents").click(); // Refresh the events list
-    } catch (error) {
-      console.error("Error deleting event:", error);
-      alert("Failed to delete event. Check console for details.");
-    }
-  });
-
-  // Delete Guest
-  document.getElementById("deleteGuest").addEventListener("click", async () => {
-    const guestId = document.getElementById("deleteGuestId").value.trim();
-    if (!guestId) {
-      alert("Please enter a Guest ID to delete.");
-      return;
-    }
-
-    try {
-      await deleteGuest(guestId);
-      alert("Guest deleted successfully!");
-      document.getElementById("viewGuests").click(); // Refresh the guests list
-    } catch (error) {
-      console.error("Error deleting guest:", error);
-      alert("Failed to delete guest. Check console for details.");
     }
   });
 });

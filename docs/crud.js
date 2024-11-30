@@ -31,6 +31,7 @@ export async function getEventIds() {
     querySnapshot.forEach((doc) => {
       events.push({ id: doc.id, ...doc.data() });
     });
+    console.log("Retrieved events:", events);
     return events;
   } catch (error) {
     console.error("Error retrieving events:", error);
@@ -41,6 +42,7 @@ export async function getEventIds() {
 // Delete an event
 export async function deleteEvent(eventId) {
   try {
+    console.log("Attempting to delete event with ID:", eventId);
     const eventRef = doc(db, "Events", eventId);
     await deleteDoc(eventRef);
     console.log("Event deleted successfully:", eventId);
@@ -73,6 +75,7 @@ export async function getGuestsByEvent(eventId) {
     querySnapshot.forEach((doc) => {
       guests.push({ id: doc.id, ...doc.data() });
     });
+    console.log("Retrieved guests for event:", guests);
     return guests;
   } catch (error) {
     console.error("Error retrieving guests for event:", error);
@@ -83,6 +86,7 @@ export async function getGuestsByEvent(eventId) {
 // Delete a guest
 export async function deleteGuest(guestId) {
   try {
+    console.log("Attempting to delete guest with ID:", guestId);
     const guestRef = doc(db, "Guests", guestId);
     await deleteDoc(guestRef);
     console.log("Guest deleted successfully:", guestId);
