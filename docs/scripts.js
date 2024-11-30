@@ -1,4 +1,11 @@
-import { addEvent, getEvents, addGuest, getGuestsByEvent } from "./crud.js";
+import {
+  addEvent,
+  getEventIds,
+  addGuest,
+  getGuestsByEvent,
+  deleteEvent,
+  deleteGuest,
+} from "./crud.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Add Event
@@ -19,7 +26,29 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("addEventForm").reset();
     } catch (error) {
       console.error("Error adding event:", error);
-      alert("Failed to add event. Check the console for details.");
+      alert("Failed to add event. Check console for details.");
+    }
+  });
+
+  // View Events
+  document.getElementById("viewEvents").addEventListener("click", async () => {
+    const eventsOutput = document.getElementById("eventsOutput");
+    eventsOutput.innerHTML = ""; // Clear output
+
+    try {
+      const events = await getEventIds();
+      if (events.length > 0) {
+        events.forEach((event) => {
+          const div = document.createElement("div");
+          div.textContent = `Event: ${event.name} (Date: ${event.date}, Location: ${event.location})`;
+          eventsOutput.appendChild(div);
+        });
+      } else {
+        eventsOutput.textContent = "No events found.";
+      }
+    } catch (error) {
+      console.error("Error retrieving events:", error);
+      eventsOutput.textContent = "Failed to load events.";
     }
   });
 
@@ -41,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("addGuestForm").reset();
     } catch (error) {
       console.error("Error adding guest:", error);
-      alert("Failed to add guest. Check the console for details.");
+      alert("Failed to add guest. Check console for details.");
     }
   });
 
@@ -70,6 +99,40 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       console.error("Error retrieving guests:", error);
       guestsOutput.textContent = "Failed to load guests.";
+    }
+  });
+
+  // Delete Event
+  document.getElementById("deleteEvent").addEventListener("click", async () => {
+    const eventId = document.getElementById("deleteEventId").value.trim();
+    if (!eventId) {
+      alert("Please enter an Event ID to delete.");
+      return;
+    }
+
+    try {
+      await deleteEvent(eventId);
+      alert("Event deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      alert("Failed to delete event. Check console for details.");
+    }
+  });
+
+  // Delete Guest
+  document.getElementById("deleteGuest").addEventListener("click", async () => {
+    const guestId = document.getElementById("deleteGuestId").value.trim();
+    if (!guestId) {
+      alert("Please enter a Guest ID to delete.");
+      return;
+    }
+
+    try {
+      await deleteGuest(guestId);
+      alert("Guest deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting guest:", error);
+      alert("Failed to delete guest. Check console for details.");
     }
   });
 });
