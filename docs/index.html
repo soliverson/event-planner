@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event Planner</title>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"></script>
 
@@ -19,7 +19,7 @@
     <!-- Add Event Form -->
     <div class="form-section">
       <h2>Add Event</h2>
-      <form id="addEventForm" onsubmit="return false;">
+      <form id="addEventForm">
         <label for="eventName">Event Name:</label>
         <input type="text" id="eventName" name="eventName" required>
         
@@ -36,7 +36,7 @@
     <!-- Add Guest Form -->
     <div class="form-section">
       <h2>Add Guest</h2>
-      <form id="addGuestForm" onsubmit="return false;">
+      <form id="addGuestForm">
         <label for="guestName">Guest Name:</label>
         <input type="text" id="guestName" name="guestName" required>
         
@@ -70,7 +70,7 @@
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Firebase Configuration -->
   <script src="./firebase-config.js"></script>
   <script src="./crud.js"></script>
   <script src="./scripts.js"></script>
