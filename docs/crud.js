@@ -9,85 +9,51 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 import db from "./firebase-config.js";
 
-// ---------------------- CRUD for Events ----------------------
-
-// Add a new event
+// Add Event
 export async function addEvent(event) {
-  try {
-    const docRef = await addDoc(collection(db, "Events"), event);
-    console.log("Event added successfully with ID:", docRef.id);
-    return docRef.id;
-  } catch (error) {
-    console.error("Error adding event:", error);
-    throw error;
-  }
+  const docRef = await addDoc(collection(db, "Events"), event);
+  console.log("Event added successfully:", docRef.id);
+  return docRef.id;
 }
 
-// Retrieve all events
+// Get Events
 export async function getEventIds() {
-  try {
-    const events = [];
-    const querySnapshot = await getDocs(collection(db, "Events"));
-    querySnapshot.forEach((doc) => {
-      events.push({ id: doc.id, ...doc.data() });
-    });
-    return events;
-  } catch (error) {
-    console.error("Error retrieving events:", error);
-    throw error;
-  }
+  const events = [];
+  const querySnapshot = await getDocs(collection(db, "Events"));
+  querySnapshot.forEach((doc) => {
+    events.push({ id: doc.id, ...doc.data() });
+  });
+  return events;
 }
 
-// Delete an event
+// Delete Event
 export async function deleteEvent(eventId) {
-  try {
-    const eventRef = doc(db, "Events", eventId);
-    await deleteDoc(eventRef);
-    console.log("Event deleted successfully:", eventId);
-  } catch (error) {
-    console.error("Error deleting event:", error);
-    throw error;
-  }
+  const eventRef = doc(db, "Events", eventId);
+  await deleteDoc(eventRef);
+  console.log("Event deleted successfully:", eventId);
 }
 
-// ---------------------- CRUD for Guests ----------------------
-
-// Add a new guest
+// Add Guest
 export async function addGuest(eventId, guest) {
-  try {
-    const docRef = await addDoc(collection(db, "Guests"), { ...guest, eventId });
-    console.log("Guest added successfully with ID:", docRef.id);
-    return docRef.id;
-  } catch (error) {
-    console.error("Error adding guest:", error);
-    throw error;
-  }
+  const docRef = await addDoc(collection(db, "Guests"), { ...guest, eventId });
+  console.log("Guest added successfully:", docRef.id);
+  return docRef.id;
 }
 
-// Retrieve guests by event
+// Get Guests by Event
 export async function getGuestsByEvent(eventId) {
-  try {
-    const guests = [];
-    const q = query(collection(db, "Guests"), where("eventId", "==", eventId));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      guests.push({ id: doc.id, ...doc.data() });
-    });
-    return guests;
-  } catch (error) {
-    console.error("Error retrieving guests for event:", error);
-    throw error;
-  }
+  const guests = [];
+  const q = query(collection(db, "Guests"), where("eventId", "==", eventId));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    guests.push({ id: doc.id, ...doc.data() });
+  });
+  return guests;
 }
 
-// Delete a guest
+// Delete Guest
 export async function deleteGuest(guestId) {
-  try {
-    const guestRef = doc(db, "Guests", guestId);
-    await deleteDoc(guestRef);
-    console.log("Guest deleted successfully:", guestId);
-  } catch (error) {
-    console.error("Error deleting guest:", error);
-    throw error;
-  }
+  const guestRef = doc(db, "Guests", guestId);
+  await deleteDoc(guestRef);
+  console.log("Guest deleted successfully:", guestId);
 }
