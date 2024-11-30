@@ -33,11 +33,33 @@
       </form>
     </div>
 
-    <!-- Retrieve Events -->
+    <!-- Add Guest Form -->
     <div class="form-section">
-      <h2>View Events</h2>
-      <button id="viewEvents">View All Events</button>
-      <div id="eventsOutput"></div>
+      <h2>Add Guest</h2>
+      <form id="addGuestForm">
+        <label for="guestName">Guest Name:</label>
+        <input type="text" id="guestName" name="guestName" required>
+        
+        <label for="rsvpStatus">RSVP:</label>
+        <select id="rsvpStatus" name="rsvpStatus" required>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+        
+        <label for="eventId">Event ID:</label>
+        <input type="text" id="eventId" name="eventId" required placeholder="Enter associated Event ID">
+        
+        <button type="submit">Add Guest</button>
+      </form>
+    </div>
+
+    <!-- Retrieve Guests by Event -->
+    <div class="form-section">
+      <h2>View Guests by Event</h2>
+      <label for="eventGuestsId">Event ID:</label>
+      <input type="text" id="eventGuestsId" placeholder="Enter Event ID">
+      <button id="viewGuests">View Guests</button>
+      <div id="guestsOutput"></div>
     </div>
   </div>
 
