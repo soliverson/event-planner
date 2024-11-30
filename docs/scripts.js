@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await addEvent({ name, date, location });
       alert("Event added successfully!");
       document.getElementById("addEventForm").reset();
+      refreshEvents(); // Refresh the events list after adding
     } catch (error) {
       console.error("Error adding event:", error);
       alert("Failed to add event. Check the console for details.");
@@ -31,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // View Events
-  document.getElementById("viewEvents").addEventListener("click", async () => {
+  async function refreshEvents() {
     const eventsOutput = document.getElementById("eventsOutput");
     eventsOutput.innerHTML = ""; // Clear output
 
@@ -50,7 +51,9 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error retrieving events:", error);
       eventsOutput.textContent = "Failed to load events.";
     }
-  });
+  }
+
+  document.getElementById("viewEvents").addEventListener("click", refreshEvents);
 
   // Add Guest
   document.getElementById("addGuestForm").addEventListener("submit", async (e) => {
@@ -68,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await addGuest(eventId, { name, rsvp });
       alert("Guest added successfully!");
       document.getElementById("addGuestForm").reset();
+      refreshGuests(eventId); // Refresh guests list after adding
     } catch (error) {
       console.error("Error adding guest:", error);
       alert("Failed to add guest. Check console for details.");
@@ -75,8 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // View Guests by Event
-  document.getElementById("viewGuests").addEventListener("click", async () => {
-    const eventId = document.getElementById("eventGuestsId").value.trim();
+  async function refreshGuests(eventId) {
     const guestsOutput = document.getElementById("guestsOutput");
     guestsOutput.innerHTML = ""; // Clear output
 
@@ -100,6 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error retrieving guests:", error);
       guestsOutput.textContent = "Failed to load guests.";
     }
+  }
+
+  document.getElementById("viewGuests").addEventListener("click", async () => {
+    const eventId = document.getElementById("eventGuestsId").value.trim();
+    await refreshGuests(eventId);
   });
 
   // Delete Event
@@ -113,6 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await deleteEvent(eventId);
       alert("Event deleted successfully!");
+      document.getElementById("deleteEventId").value = ""; // Clear input
+      refreshEvents(); // Refresh events list after deletion
     } catch (error) {
       console.error("Error deleting event:", error);
       alert("Failed to delete event. Check console for details.");
@@ -122,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Delete Guest
   document.getElementById("deleteGuest").addEventListener("click", async () => {
     const guestId = document.getElementById("deleteGuestId").value.trim();
+    const eventId = document.getElementById("eventGuestsId").value.trim(); // For refreshing guests list
     if (!guestId) {
       alert("Please enter a Guest ID to delete.");
       return;
@@ -130,6 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await deleteGuest(guestId);
       alert("Guest deleted successfully!");
+      document.getElementById("deleteGuestId").value = ""; // Clear input
+      if (eventId) await refreshGuests(eventId); // Refresh guests if event ID is available
     } catch (error) {
       console.error("Error deleting guest:", error);
       alert("Failed to delete guest. Check console for details.");
