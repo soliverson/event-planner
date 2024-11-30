@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
       await addEvent({ name, date, location });
       alert("Event added successfully!");
       document.getElementById("addEventForm").reset();
-      document.getElementById("viewEvents").click(); // Refresh the events list
     } catch (error) {
       console.error("Error adding event:", error);
       alert("Failed to add event. Check the console for details.");
@@ -69,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
       await addGuest(eventId, { name, rsvp });
       alert("Guest added successfully!");
       document.getElementById("addGuestForm").reset();
-      document.getElementById("viewGuests").click(); // Refresh the guests list
     } catch (error) {
       console.error("Error adding guest:", error);
       alert("Failed to add guest. Check console for details.");
@@ -115,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await deleteEvent(eventId);
       alert("Event deleted successfully!");
-      document.getElementById("viewEvents").click(); // Refresh the events list
     } catch (error) {
       console.error("Error deleting event:", error);
       alert("Failed to delete event. Check console for details.");
@@ -133,7 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await deleteGuest(guestId);
       alert("Guest deleted successfully!");
-      document.getElementById("viewGuests").click(); // Refresh the guests list
     } catch (error) {
       console.error("Error deleting guest:", error);
       alert("Failed to delete guest. Check console for details.");
